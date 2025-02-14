@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stylish Timer</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #222;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            text-align: center;
+            background: #333;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
+        }
+        #time {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .buttons button {
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .start { background: #28a745; color: white; }
+        .stop { background: #dc3545; color: white; }
+        .reset { background: #ffc107; color: black; }
+        .buttons button:hover { opacity: 0.8; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="time">00:00</div>
+        <div class="buttons">
+            <button class="start" onclick="startClock()">Start</button>
+            <button class="stop" onclick="stopClock()">Stop</button>
+            <button class="reset" onclick="resetClock()">Reset</button>
+        </div>
+    </div>
+    <script>
+        let secondsElapsed = 0;
+        let interval = null;
+        const time = document.getElementById("time");
+
+        function padStart(value) {
+            return String(value).padStart(2, "0");
+        }
+
+        function setTime() {
+            const minutes = Math.floor(secondsElapsed / 60);
+            const seconds = secondsElapsed % 60;
+            time.innerHTML = `${padStart(minutes)}:${padStart(seconds)}`;
+        }
+
+        function timer() {
+            secondsElapsed++;
+            setTime();
+        }
+
+        function startClock() {
+            if (interval) stopClock();
+            interval = setInterval(timer, 1000);
+        }
+
+        function stopClock() {
+            clearInterval(interval);
+        }
+
+        function resetClock() {
+            stopClock();
+            secondsElapsed = 0;
+            setTime();
+        }
+    </script>
+</body>
+</html>
